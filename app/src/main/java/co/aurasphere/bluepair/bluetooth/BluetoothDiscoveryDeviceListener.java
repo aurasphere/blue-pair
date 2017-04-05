@@ -4,8 +4,7 @@ import android.bluetooth.BluetoothDevice;
 
 /**
  * Callback for handling Bluetooth events.
- * Created by Donato on 02/04/2017.
- *
+ *s
  * @author Donato Rimenti
  */
 public interface BluetoothDiscoveryDeviceListener {

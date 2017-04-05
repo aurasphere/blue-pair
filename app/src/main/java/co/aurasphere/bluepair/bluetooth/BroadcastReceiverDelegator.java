@@ -12,7 +12,6 @@ import java.io.Closeable;
 
 /**
  * Class used to handle communication with the OS about Bluetooth system events.
- * Created by Donato on 02/04/2017.
  *
  * @author Donato Rimenti
  */
@@ -54,10 +53,7 @@ public class BroadcastReceiverDelegator extends BroadcastReceiver implements Clo
     }
 
     /**
-     * Called when a new Intent is received from the OS.
-     *
-     * @param context the current context.
-     * @param intent  the intent received.
+     * {@inheritDoc}
      */
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -85,7 +81,7 @@ public class BroadcastReceiverDelegator extends BroadcastReceiver implements Clo
     }
 
     /**
-     * Disposes this object.
+     * {@inheritDoc}
      */
     @Override
     public void close() {

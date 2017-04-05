@@ -9,24 +9,47 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import co.aurasphere.bluepair.bluetooth.BluetoothController;
 import co.aurasphere.bluepair.view.DeviceRecyclerViewAdapter;
 import co.aurasphere.bluepair.view.ListInteractionListener;
 
+/**
+ * Main Activity of this application.
+ *
+ * @author Donato Rimenti
+ */
 public class MainActivity extends AppCompatActivity implements ListInteractionListener<BluetoothDevice> {
 
+    /**
+     * Tag string used for logging.
+     */
+    private static final String TAG = "MainActivity";
+
+    /**
+     * The controller for Bluetooth functionalities.
+     */
     private BluetoothController bluetooth;
 
+    /**
+     * The Bluetooth discovery progress bar.
+     */
     private ProgressBar progressBar;
 
+    /**
+     * The Bluetooth discovery button.
+     */
     private FloatingActionButton fab;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +80,9 @@ public class MainActivity extends AppCompatActivity implements ListInteractionLi
         });
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -64,6 +90,9 @@ public class MainActivity extends AppCompatActivity implements ListInteractionLi
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -80,13 +109,12 @@ public class MainActivity extends AppCompatActivity implements ListInteractionLi
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Creates the about popup.
+     */
     private void showAbout() {
         // Inflate the about message contents
         View messageView = getLayoutInflater().inflate(R.layout.about, null, false);
-
-        // When linking text, force to always use default color. This works
-        // around a pressed color state bug.
-        TextView textView = (TextView) messageView.findViewById(R.id.about_credits);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setIcon(R.mipmap.ic_launcher);
@@ -96,13 +124,33 @@ public class MainActivity extends AppCompatActivity implements ListInteractionLi
         builder.show();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void onItemClick(BluetoothDevice device) {
-        bluetooth.pair(device);
+        Log.d(TAG, "Item clicked : " + BluetoothController.deviceToString(device));
+        if(bluetooth.isAlreadyPaired(device)){
+            Log.d(TAG, "Device already paired!");
+            Toast.makeText(this, R.string.device_already_paired, Toast.LENGTH_SHORT).show();
+        } else {
+            Log.d(TAG, "Device not paired. Pairing.");
+            boolean outcome = bluetooth.pair(device);
+
+            // Prints a message to the user.
+            if(outcome) {
+                Toast.makeText(this, R.string.device_pairing_success, Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, R.string.device_pairing_fail, Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void startProgress() {
+    public void onLoadingStarted() {
         this.progressBar.setVisibility(View.VISIBLE);
 
         // Changes the button icon.
@@ -110,8 +158,11 @@ public class MainActivity extends AppCompatActivity implements ListInteractionLi
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void endProgress(boolean discoveryEnded) {
+    public void onLoadingEnded(boolean discoveryEnded) {
         if (this.progressBar.getVisibility() == View.VISIBLE) {
             this.progressBar.setVisibility(View.GONE);
         }
@@ -121,6 +172,9 @@ public class MainActivity extends AppCompatActivity implements ListInteractionLi
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void onDestroy() {
         bluetooth.close();

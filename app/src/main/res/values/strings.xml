@@ -4,4 +4,7 @@
     <string name="app_credits">Author : Donato Rimenti\nVersion: 1.0.0\nFollow me on Github: https://github.com/aurasphere\nAdd me on LinkedIn : https://www.linkedin.com/in/donato-rimenti-764876132</string>
     <string name="app_descrip">Simple app for handling Bluetooth discovery and pairing.</string>
     <string name="device_discovery_started">Looking for nearby devices...</string>
+    <string name="device_already_paired">This device is already paired!</string>
+    <string name="device_pairing_fail">Device pairing failed!</string>
+    <string name="device_pairing_success">Device succesfully paired!</string>
 </resources>

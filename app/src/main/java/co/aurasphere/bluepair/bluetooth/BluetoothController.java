@@ -13,7 +13,6 @@ import java.io.Closeable;
 
 /**
  * Class for handling Bluetooth connection.
- * Created by Donato on 02/04/2017.
  *
  * @author Donato Rimenti
  */
@@ -87,13 +86,16 @@ public class BluetoothController implements Closeable {
      * Performs the device pairing.
      *
      * @param device the device to pair with.
+     * @return true if the pairing was successful, false otherwise.
      */
-    public void pair(BluetoothDevice device) {
+    public boolean pair(BluetoothDevice device) {
         // Stops the discovery and then creates the pairing.
         Log.d(TAG, "Bluetooth cancelling discovery.");
         bluetooth.cancelDiscovery();
         Log.d(TAG, "Bluetooth bonding with device: " + deviceToString(device));
-        device.createBond();
+        boolean outcome = device.createBond();
+        Log.d(TAG, "Bounding outcome : " + outcome);
+        return outcome;
     }
 
     /**
@@ -117,7 +119,7 @@ public class BluetoothController implements Closeable {
     }
 
     /**
-     * Disposes this object.
+     * {@inheritDoc}
      */
     @Override
     public void close() {
