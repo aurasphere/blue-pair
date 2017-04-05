@@ -11,14 +11,35 @@ import android.util.Log;
 import java.io.Closeable;
 
 /**
+ * Class used to handle communication with the OS about Bluetooth system events.
  * Created by Donato on 02/04/2017.
+ *
+ * @author Donato Rimenti
  */
 public class BroadcastReceiverDelegator extends BroadcastReceiver implements Closeable {
 
+    /**
+     * Callback for Bluetooth events.
+     */
     private final BluetoothDiscoveryDeviceListener listener;
 
+    /**
+     * Tag string used for logging.
+     */
     private final String TAG = "BroadcastReceiver";
 
+    /**
+     * The context of this object.
+     */
+    private final Context context;
+
+    /**
+     * Instantiates a new BroadcastReceiverDelegator.
+     *
+     * @param context   the context of this object.
+     * @param listener  a callback for handling Bluetooth events.
+     * @param bluetooth a controller for the Bluetooth.
+     */
     public BroadcastReceiverDelegator(Context context, BluetoothDiscoveryDeviceListener listener, BluetoothController bluetooth) {
         this.listener = listener;
         this.context = context;
@@ -32,8 +53,12 @@ public class BroadcastReceiverDelegator extends BroadcastReceiver implements Clo
         context.registerReceiver(this, filter);
     }
 
-    private final Context context;
-
+    /**
+     * Called when a new Intent is received from the OS.
+     *
+     * @param context the current context.
+     * @param intent  the intent received.
+     */
     @Override
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
@@ -52,12 +77,18 @@ public class BroadcastReceiverDelegator extends BroadcastReceiver implements Clo
         }
     }
 
-    public void onDeviceDiscoveryStarted(){
+    /**
+     * Called when device discovery starts.
+     */
+    public void onDeviceDiscoveryStarted() {
         listener.onDeviceDiscoveryStarted();
     }
 
+    /**
+     * Disposes this object.
+     */
     @Override
-    public void close(){
+    public void close() {
         context.unregisterReceiver(this);
     }
 }
