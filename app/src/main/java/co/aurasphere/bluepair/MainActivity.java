@@ -2,6 +2,7 @@ package co.aurasphere.bluepair;
 
 import android.bluetooth.BluetoothDevice;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
@@ -52,6 +53,12 @@ public class MainActivity extends AppCompatActivity implements ListInteractionLi
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        // Changes the theme back from the splashscreen. It's very important that this is called
+        // BEFORE onCreate.
+        SystemClock.sleep(getResources().getInteger(R.integer.splashscreen_duration));
+        setTheme(R.style.AppTheme_NoActionBar);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
