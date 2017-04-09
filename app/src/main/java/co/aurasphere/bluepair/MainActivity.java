@@ -1,5 +1,29 @@
+/**
+ * MIT License
+ * <p>
+ * Copyright (c) 2017 Donato Rimenti
+ * <p>
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * <p>
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * <p>
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 package co.aurasphere.bluepair;
 
+import android.app.ProgressDialog;
 import android.bluetooth.BluetoothDevice;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -8,7 +32,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -20,6 +43,7 @@ import android.widget.Toast;
 import co.aurasphere.bluepair.bluetooth.BluetoothController;
 import co.aurasphere.bluepair.view.DeviceRecyclerViewAdapter;
 import co.aurasphere.bluepair.view.ListInteractionListener;
+import co.aurasphere.bluepair.view.RecyclerViewProgressEmptySupport;
 
 /**
  * Main Activity of this application.
@@ -39,14 +63,21 @@ public class MainActivity extends AppCompatActivity implements ListInteractionLi
     private BluetoothController bluetooth;
 
     /**
-     * The Bluetooth discovery progress bar.
-     */
-    private ProgressBar progressBar;
-
-    /**
      * The Bluetooth discovery button.
      */
     private FloatingActionButton fab;
+
+    /**
+     * Progress dialog shown during the pairing process.
+     */
+    private ProgressDialog bondingProgressDialog;
+
+    /**
+     * Adapter for the recycler view.
+     */
+    private DeviceRecyclerViewAdapter recyclerViewAdapter;
+
+    private RecyclerViewProgressEmptySupport recyclerView;
 
     /**
      * {@inheritDoc}
@@ -64,13 +95,22 @@ public class MainActivity extends AppCompatActivity implements ListInteractionLi
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        this.progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         // Sets up the RecyclerView.
-        DeviceRecyclerViewAdapter recyclerViewAdapter = new DeviceRecyclerViewAdapter(this);
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(recyclerViewAdapter);
+        this.recyclerViewAdapter = new DeviceRecyclerViewAdapter(this);
+        this.recyclerView = (RecyclerViewProgressEmptySupport) findViewById(R.id.list);
+        this.recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        // Sets the view to show when the dataset is empty. IMPORTANT : this method must be called
+        // before recyclerView.setAdapter().
+        View emptyView = findViewById(R.id.empty_list);
+        this.recyclerView.setEmptyView(emptyView);
+
+        // Sets the view to show during progress.
+        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        this.recyclerView.setProgressView(progressBar);
+
+        this.recyclerView.setAdapter(recyclerViewAdapter);
 
         // Sets up the bluetooth controller.
         this.bluetooth = new BluetoothController(this, recyclerViewAdapter);
@@ -79,10 +119,22 @@ public class MainActivity extends AppCompatActivity implements ListInteractionLi
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, R.string.device_discovery_started, Snackbar.LENGTH_SHORT).show();
 
-                // Starts the discovery.
-                bluetooth.startDiscovery();
+                // If the bluetooth is not enabled, turns it on.
+                if (!bluetooth.isBluetoothEnabled()) {
+                    Snackbar.make(view, R.string.enabling_bluetooth, Snackbar.LENGTH_SHORT).show();
+                    bluetooth.turnOnBluetoothAndScheduleDiscovery();
+                } else {
+                    //Prevents the user from spamming the button and thus glitching the UI.
+                    if (!bluetooth.isDiscovering()) {
+                        // Starts the discovery.
+                        Snackbar.make(view, R.string.device_discovery_started, Snackbar.LENGTH_SHORT).show();
+                        bluetooth.startDiscovery();
+                    } else {
+                        Snackbar.make(view, R.string.device_discovery_stopped, Snackbar.LENGTH_SHORT).show();
+                        bluetooth.cancelDiscovery();
+                    }
+                }
             }
         });
     }
@@ -137,7 +189,7 @@ public class MainActivity extends AppCompatActivity implements ListInteractionLi
     @Override
     public void onItemClick(BluetoothDevice device) {
         Log.d(TAG, "Item clicked : " + BluetoothController.deviceToString(device));
-        if(bluetooth.isAlreadyPaired(device)){
+        if (bluetooth.isAlreadyPaired(device)) {
             Log.d(TAG, "Device already paired!");
             Toast.makeText(this, R.string.device_already_paired, Toast.LENGTH_SHORT).show();
         } else {
@@ -145,10 +197,14 @@ public class MainActivity extends AppCompatActivity implements ListInteractionLi
             boolean outcome = bluetooth.pair(device);
 
             // Prints a message to the user.
-            if(outcome) {
-                Toast.makeText(this, R.string.device_pairing_success, Toast.LENGTH_SHORT).show();
+            String deviceName = BluetoothController.getDeviceName(device);
+            if (outcome) {
+                // The pairing has started, shows a progress dialog.
+                Log.d(TAG, "Showing pairing dialog");
+                bondingProgressDialog = ProgressDialog.show(this, "", "Pairing with device " + deviceName + "...", true, false);
             } else {
-                Toast.makeText(this, R.string.device_pairing_fail, Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "Error while pairing with device " + deviceName + "!");
+                Toast.makeText(this, "Error while pairing with device " + deviceName + "!", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -157,26 +213,51 @@ public class MainActivity extends AppCompatActivity implements ListInteractionLi
      * {@inheritDoc}
      */
     @Override
-    public void onLoadingStarted() {
-        this.progressBar.setVisibility(View.VISIBLE);
+    public void startLoading() {
+        this.recyclerView.startLoading();
 
         // Changes the button icon.
-        fab.setImageResource(R.drawable.ic_bluetooth_searching_white_24dp);
-
+        this.fab.setImageResource(R.drawable.ic_bluetooth_searching_white_24dp);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void onLoadingEnded(boolean discoveryEnded) {
-        if (this.progressBar.getVisibility() == View.VISIBLE) {
-            this.progressBar.setVisibility(View.GONE);
-        }
+    public void endLoading(boolean partialResults) {
+        this.recyclerView.endLoading();
+
         // If discovery has ended, changes the button icon.
-        if (discoveryEnded) {
+        if (!partialResults) {
             fab.setImageResource(R.drawable.ic_bluetooth_white_24dp);
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void endLoadingWithDialog(boolean error, BluetoothDevice device) {
+        if (this.bondingProgressDialog != null) {
+            View view = findViewById(android.R.id.content);
+            String message;
+            String deviceName = BluetoothController.getDeviceName(device);
+
+            // Gets the message to print.
+            if (error) {
+                message = "Failed pairing with device " + deviceName + "!";
+            } else {
+                message = "Succesfully paired with device " + deviceName + "!";
+            }
+
+            // Dismisses the progress dialog and prints a message to the user.
+            this.bondingProgressDialog.dismiss();
+            Snackbar.make(view, message, Snackbar.LENGTH_SHORT).show();
+
+            // Cleans up state.
+            this.bondingProgressDialog = null;
+        }
+
     }
 
     /**
@@ -188,4 +269,31 @@ public class MainActivity extends AppCompatActivity implements ListInteractionLi
         super.onDestroy();
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Stops the discovery.
+        if (this.bluetooth != null) {
+            this.bluetooth.cancelDiscovery();
+        }
+        // Cleans the view.
+        if (this.recyclerViewAdapter != null) {
+            this.recyclerViewAdapter.cleanView();
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // Stoops the discovery.
+        if (this.bluetooth != null) {
+            this.bluetooth.cancelDiscovery();
+        }
+    }
 }
