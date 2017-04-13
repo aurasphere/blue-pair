@@ -239,7 +239,7 @@ public class MainActivity extends AppCompatActivity implements ListInteractionLi
     @Override
     public void endLoadingWithDialog(boolean error, BluetoothDevice device) {
         if (this.bondingProgressDialog != null) {
-            View view = findViewById(android.R.id.content);
+            View view = findViewById(R.id.main_content);
             String message;
             String deviceName = BluetoothController.getDeviceName(device);
 
@@ -273,8 +273,8 @@ public class MainActivity extends AppCompatActivity implements ListInteractionLi
      * {@inheritDoc}
      */
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onRestart() {
+        super.onRestart();
         // Stops the discovery.
         if (this.bluetooth != null) {
             this.bluetooth.cancelDiscovery();
@@ -289,8 +289,8 @@ public class MainActivity extends AppCompatActivity implements ListInteractionLi
      * {@inheritDoc}
      */
     @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onStop() {
+        super.onStop();
         // Stoops the discovery.
         if (this.bluetooth != null) {
             this.bluetooth.cancelDiscovery();
