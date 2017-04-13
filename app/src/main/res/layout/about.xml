@@ -36,12 +36,28 @@ SOFTWARE.
         android:textColor="?android:attr/textColorPrimary" />
 
     <TextView
-        android:id="@+id/about_credits"
+        android:id="@+id/about_author"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="20dip"
         android:textSize="16sp"
-        android:text="@string/app_credits"
+        android:text="@string/app_author"
+        android:textColor="?android:attr/textColorPrimary" />
+
+    <TextView
+        android:id="@+id/about_version"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:text="@string/app_version"
+        android:textColor="?android:attr/textColorPrimary" />
+
+    <TextView
+        android:id="@+id/about_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:text="@string/app_info"
         android:autoLink="web"
         android:textColor="?android:attr/textColorPrimary" />
 
