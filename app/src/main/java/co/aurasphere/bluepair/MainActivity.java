@@ -24,6 +24,7 @@
 package co.aurasphere.bluepair;
 
 import android.app.ProgressDialog;
+import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -113,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements ListInteractionLi
         this.recyclerView.setAdapter(recyclerViewAdapter);
 
         // Sets up the bluetooth controller.
-        this.bluetooth = new BluetoothController(this, recyclerViewAdapter);
+        this.bluetooth = new BluetoothController(this, BluetoothAdapter.getDefaultAdapter(), recyclerViewAdapter);
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
