@@ -13,8 +13,7 @@ Simple Bluetooth Android app for handling device discovery and pairing.
 <img alt="Turning on Bluetooth" src="/assets/screenshots/Screenshot_20170413-234526.png" height="600"/>
 
 4. After finish discovering app show list of founded devices with its name and/or mac address.
-<img alt="Device found" src="/assets/screenshots/Screenshot_20170413-234638.png" height="600"/>
-<img alt="No name device found" src="/assets/screenshots/Screenshot_20170412-155403.png" height="600"/>
+<img alt="Device found" src="/assets/screenshots/Screenshot_20170413-234638.png" height="600"/> <img alt="No name device found" src="/assets/screenshots/Screenshot_20170412-155403.png" height="600"/>
 
 5. Click on the devices which you wish to pair. While app pairing devices you should see this screen:
 <img alt="Pairing started" src="/assets/screenshots/Screenshot_20170413-234642.png" height="600"/>
