@@ -21,3 +21,17 @@ Simple Bluetooth Android app for handling device discovery and pairing.
 ### Get it on Google Play
 You can download this app from Google Play Store following this link:
 <a href='https://play.google.com/store/apps/details?id=co.aurasphere.bluepair&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'/></a>
+
+### Contributions
+If you want to contribute on this project, just fork this repo and submit a pull request with your changes. Improvements are always appreciated!
+
+### Project status
+This project is considered completed and won't be developed further unless I get any specific requests.
+
+### Contacts
+You can contact me using my account e-mail or opening an issue on this repo. I'll try to reply back ASAP.
+
+### License and purpose of the project
+This project was created for educational purposes, to show a working Bluetooth-based Android app and the code used to achieve it. In order to pursue this goal, the project is released under the MIT license, which lets you reuse the code for any purpose you want (even commercial) with the only requirement being copying this <a href="LICENSE">project license</a> on your project.
+
+<sub>Copyright (c) 2017 Donato Rimenti</sub>
