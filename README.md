@@ -1,3 +1,6 @@
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/aurasphere/blue-pair/blob/master/LICENSE)
+[![GitHub release](https://img.shields.io/github/release/qubyte/rubidium.svg)](https://github.com/aurasphere/blue-pair/releases)
+
 # blue-pair
 ### Overview
 Simple Bluetooth Android app for handling device discovery and pairing.
