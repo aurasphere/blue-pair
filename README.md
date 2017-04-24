@@ -1,5 +1,5 @@
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/aurasphere/blue-pair/blob/master/LICENSE)
-[![GitHub release](https://img.shields.io/github/release/qubyte/rubidium.svg)](https://github.com/aurasphere/blue-pair/releases)
+[![release](http://github-release-version.herokuapp.com/github/aurasphere/blue-pair/release.svg?style=flat)](https://github.com/allure-framework/allure-core/releases/latest)
 
 # blue-pair
 ### Overview
