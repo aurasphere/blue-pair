@@ -26,6 +26,8 @@ package co.aurasphere.bluepair;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.design.widget.FloatingActionButton;
@@ -112,6 +114,24 @@ public class MainActivity extends AppCompatActivity implements ListInteractionLi
         this.recyclerView.setProgressView(progressBar);
 
         this.recyclerView.setAdapter(recyclerViewAdapter);
+
+        // [#11] Ensures that the Bluetooth is available on this device before proceeding.
+        boolean hasBluetooth = getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH);
+        if(!hasBluetooth) {
+            AlertDialog dialog = new AlertDialog.Builder(MainActivity.this).create();
+            dialog.setTitle(getString(R.string.bluetooth_not_available_title));
+            dialog.setMessage(getString(R.string.bluetooth_not_available_message));
+            dialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Closes the dialog and terminates the activity.
+                            dialog.dismiss();
+                            MainActivity.this.finish();
+                        }
+                    });
+            dialog.setCancelable(false);
+            dialog.show();
+        }
 
         // Sets up the bluetooth controller.
         this.bluetooth = new BluetoothController(this, BluetoothAdapter.getDefaultAdapter(), recyclerViewAdapter);

@@ -202,8 +202,10 @@ public class BluetoothController implements Closeable {
      * Cancels a device discovery.
      */
     public void cancelDiscovery() {
-        bluetooth.cancelDiscovery();
-        broadcastReceiverDelegator.onDeviceDiscoveryEnd();
+        if(bluetooth != null) {
+            bluetooth.cancelDiscovery();
+            broadcastReceiverDelegator.onDeviceDiscoveryEnd();
+        }
     }
 
     /**
