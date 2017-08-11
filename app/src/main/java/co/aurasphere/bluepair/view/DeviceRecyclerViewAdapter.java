@@ -1,4 +1,4 @@
-/**
+/*
  * MIT License
  * <p>
  * Copyright (c) 2017 Donato Rimenti
@@ -24,7 +24,6 @@
 package co.aurasphere.bluepair.view;
 
 import android.bluetooth.BluetoothDevice;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
