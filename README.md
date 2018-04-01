@@ -1,5 +1,6 @@
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/aurasphere/blue-pair/blob/master/LICENSE)
-[![release](http://github-release-version.herokuapp.com/github/aurasphere/blue-pair/release.svg?style=flat)](https://github.com/aurasphere/blue-pair/releases/latest)
+[![GitHub release](https://img.shields.io/github/release/aurasphere/blue-pair.svg)](https://github.com/aurasphere/blue-pair/releases/latest)
+
 
 # Blue Pair
 ### Overview
