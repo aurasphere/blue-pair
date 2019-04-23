@@ -30,7 +30,7 @@ You can download this app from Google Play Store following this link:
 If you want to contribute on this project, just fork this repo and submit a pull request with your changes. Improvements are always appreciated!
 
 ### Project status
-This project is considered completed and won't be developed further unless I get any specific requests.
+This project is considered completed and won't be developed further unless I get any specific requests (which I MAY consider).
 
 ### Contacts
 You can contact me using my account e-mail or opening an issue on this repo. I'll try to reply back ASAP.
