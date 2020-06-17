@@ -1,18 +1,17 @@
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/aurasphere/blue-pair/blob/master/LICENSE)
 [![GitHub release](https://img.shields.io/github/release/aurasphere/blue-pair.svg)](https://github.com/aurasphere/blue-pair/releases/latest)
 
-
 # Blue Pair
 
+### Overview
+Simple Bluetooth Android app for handling device discovery and pairing.
+
 ### Sponsor
-This project is sponsored by [GitAds](https://tracking.gitads.io/?campaign=gitads&repo=blue-pair&redirect=gitads.io):
+This project is sponsored by [GitAds](https://tracking.gitads.io/?campaign=gitads&repo=blue-pair&redirect=gitads.io). You can click on the banner to support it!
 
 <a href="https://tracking.gitads.io/?campaign=gitads&repo=blue-pair&redirect=gitads.io">
   <img alt="GitAds banner" src="/assets/sponsor/720X300-2.png" />
 </a>
-
-### Overview
-Simple Bluetooth Android app for handling device discovery and pairing.
 
 ### Quickstart
 1. From the app main screen, tap on the button at the bottom right corner to start Bluetooth device discovery. If the Bluetooth is not enabled, the app will turn it on for you.
