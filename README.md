@@ -3,6 +3,14 @@
 
 
 # Blue Pair
+
+### Sponsor
+This project is sponsored by [GitAds](https://tracking.gitads.io/?campaign=gitads&repo=blue-pair&redirect=gitads.io):
+
+<a href="https://tracking.gitads.io/?campaign=gitads&repo=blue-pair&redirect=gitads.io">
+  <img alt="GitAds banner" src="https://drive.google.com/file/d/18yWC0DxfG8P0rpBw_3O22gCnn7i2yUXh/view?usp=sharing" />
+</a>
+
 ### Overview
 Simple Bluetooth Android app for handling device discovery and pairing.
 
