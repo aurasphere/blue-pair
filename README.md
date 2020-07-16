@@ -10,10 +10,10 @@ Simple Bluetooth Android app for handling device discovery and pairing.
 ### Supporting the project
 You can support the project by checking out our sponsor page. It takes only one click:
 
-<a href="https://tracking.gitads.io/?campaign=gitads&repo=blue-pair&redirect=gitads.io">
-	<img alt="Sponsor banner" src="https://images.gitads.io/blue-pair" />
+<a href="https://tracking.gitads.io/?repo=blue-pair">
+    <img src="https://images.gitads.io/blue-pair" alt="GitAds"/>
 </a>
-<br><i>This advert was placed by <a href="https://tracking.gitads.io/?campaign=gitads&repo=blue-pair&redirect=gitads.io">GitAds</a> </i>
+
 
 ### Quickstart
 1. From the app main screen, tap on the button at the bottom right corner to start Bluetooth device discovery. If the Bluetooth is not enabled, the app will turn it on for you.
