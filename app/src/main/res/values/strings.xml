@@ -26,7 +26,7 @@ SOFTWARE.
     <string name="app_name">Blue Pair</string>
     <string name="action_about">About</string>
     <string name="app_author">Author : Donato Rimenti</string>
-    <string name="app_version">Version: 1.0.1</string>
+    <string name="app_version">Version: 1.0.2</string>
     <string name="app_info">This project is open-source. The code is distributed under MIT license and available on Github following this link: https://github.com/aurasphere/blue-pair</string>
     <string name="app_descrip">Simple app for handling Bluetooth discovery and pairing.</string>
     <string name="device_discovery_started">Looking for nearby devices&#8230;</string>
