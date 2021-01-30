@@ -8,5 +8,3 @@
 /captures
 .externalNativeBuild
 *.apk
-/blue-pair-secret.properties
-/app/app-keystore.jks

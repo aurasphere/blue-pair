@@ -24,6 +24,7 @@
 package co.aurasphere.bluepair.bluetooth;
 
 import android.bluetooth.BluetoothDevice;
+import android.content.Context;
 
 /**
  * Callback for handling Bluetooth events.
@@ -70,5 +71,12 @@ public interface BluetoothDiscoveryDeviceListener {
      * Called when a device pairing ends.
      */
     void onDevicePairingEnded();
+
+    /**
+     * Defines how the Bluetooth permissions should be checked on the device.
+     *
+     * @param context the calling activity/service.
+     */
+     void getBluetoothPermission(Context context);
 
 }

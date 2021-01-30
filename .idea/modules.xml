@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Desktop-blue-pair.iml" filepath="$PROJECT_DIR$/.idea/modules/Desktop-blue-pair.iml" group="blue-pair" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/blue-pair.iml" filepath="$PROJECT_DIR$/blue-pair.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/blue-pair-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/blue-pair-app.iml" group="blue-pair/app" />
+      <module fileurl="file://$PROJECT_DIR$/blue-pair-service.iml" filepath="$PROJECT_DIR$/blue-pair-service.iml" />
     </modules>
   </component>
 </project>

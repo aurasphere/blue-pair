@@ -12,6 +12,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <service android:name=".service.BluePairService" android:exported="false"/>
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|screenSize"
@@ -30,10 +31,6 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
-        <meta-data
-            android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="@string/AD_APP_ID"/>
 
     </application>
 

@@ -24,11 +24,10 @@
 package co.aurasphere.bluepair.bluetooth;
 
 import android.Manifest;
-import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.content.Context;
 import android.content.pm.PackageManager;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.Toast;
@@ -58,9 +57,9 @@ public class BluetoothController implements Closeable {
     private final BroadcastReceiverDelegator broadcastReceiverDelegator;
 
     /**
-     * The activity which is using this controller.
+     * The context which is using this controller.
      */
-    private final Activity context;
+    private final Context context;
 
     /**
      * Used as a simple way of synchronization between turning on the Bluetooth and starting a
@@ -80,7 +79,7 @@ public class BluetoothController implements Closeable {
      * @param context  the activity which is using this controller.
      * @param listener a callback for handling Bluetooth events.
      */
-    public BluetoothController(Activity context,BluetoothAdapter adapter, BluetoothDiscoveryDeviceListener listener) {
+    public BluetoothController(Context context, BluetoothAdapter adapter, BluetoothDiscoveryDeviceListener listener) {
         this.context = context;
         this.bluetooth = adapter;
         this.broadcastReceiverDelegator = new BroadcastReceiverDelegator(context, listener, this);
@@ -106,9 +105,7 @@ public class BluetoothController implements Closeable {
         // this, the discovery won't find any device.
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(context,
-                    new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
-                    1);
+            broadcastReceiverDelegator.getBluetoothPermission(this.context);
         }
 
         // If another discovery is in progress, cancels it before starting the new one.

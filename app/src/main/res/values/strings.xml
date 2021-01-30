@@ -26,7 +26,7 @@ SOFTWARE.
     <string name="app_name">Blue Pair</string>
     <string name="action_about">About</string>
     <string name="app_author">Author : Donato Rimenti</string>
-    <string name="app_version">Version: 1.0.2</string>
+    <string name="app_version">Version: 1.0.1</string>
     <string name="app_info">This project is open-source. The code is distributed under MIT license and available on Github following this link: https://github.com/aurasphere/blue-pair</string>
     <string name="app_descrip">Simple app for handling Bluetooth discovery and pairing.</string>
     <string name="device_discovery_started">Looking for nearby devices&#8230;</string>
@@ -37,4 +37,6 @@ SOFTWARE.
     <string name="empty_list_message">No nearby devices found. Tap on the bottom-right button to start a new device discovery.</string>
     <string name="bluetooth_not_available_message">It seems that this device doesn\'t have a Bluetooth controller available. \nBlue Pair works only with Bluetooth, so please try again on a different device. \nThe app will be now terminated.</string>
     <string name="bluetooth_not_available_title">Bluetooth not available</string>
+    <string name="action_service_start">Start service</string>
+    <string name="bluetooth_service_stop">Stop</string>
 </resources>

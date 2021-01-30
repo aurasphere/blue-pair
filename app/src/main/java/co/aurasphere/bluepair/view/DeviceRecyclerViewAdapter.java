@@ -23,7 +23,11 @@
  */
 package co.aurasphere.bluepair.view;
 
+import android.Manifest;
+import android.app.Activity;
 import android.bluetooth.BluetoothDevice;
+import android.content.Context;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -211,6 +215,16 @@ public class DeviceRecyclerViewAdapter
                     break;
             }
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void getBluetoothPermission(Context context) {
+        ActivityCompat.requestPermissions((Activity) context,
+                new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                1);
     }
 
     /**

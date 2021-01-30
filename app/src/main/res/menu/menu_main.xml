@@ -26,6 +26,12 @@ SOFTWARE.
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="co.aurasphere.bluepair.MainActivity" >
+
+    <item android:id="@+id/action_service_start"
+        android:title="@string/action_service_start"
+        android:orderInCategory="99"
+        app:showAsAction="never" />
+
     <item android:id="@+id/action_about"
         android:title="@string/action_about"
         android:orderInCategory="100"

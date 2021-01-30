@@ -77,6 +77,13 @@ public class BroadcastReceiverDelegator extends BroadcastReceiver implements Clo
     }
 
     /**
+     * Called when device discovery starts.
+     */
+    public void onDeviceDiscoveryStarted() {
+        listener.onDeviceDiscoveryStarted();
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -113,13 +120,6 @@ public class BroadcastReceiverDelegator extends BroadcastReceiver implements Clo
     }
 
     /**
-     * Called when device discovery starts.
-     */
-    public void onDeviceDiscoveryStarted() {
-        listener.onDeviceDiscoveryStarted();
-    }
-
-    /**
      * Called when device discovery ends.
      */
     public void onDeviceDiscoveryEnd() {
@@ -131,6 +131,15 @@ public class BroadcastReceiverDelegator extends BroadcastReceiver implements Clo
      */
     public void onBluetoothTurningOn() {
         listener.onBluetoothTurningOn();
+    }
+
+    /**
+     * Defines how the Bluetooth permissions should be checked on the device.
+     *
+     * @param context the calling activity/service.
+     */
+    public void getBluetoothPermission(Context context) {
+        listener.getBluetoothPermission(context);
     }
 
     /**

@@ -3,9 +3,8 @@
 [![Donate](https://img.shields.io/badge/Donate-PayPal-orange.svg)](https://www.paypal.com/donate/?cmd=_donations&business=8UK2BZP2K8NSS)
 
 # Blue Pair
-
 ### Overview
-Simple Bluetooth Android app for handling device discovery and pairing.
+Simple Bluetooth Android app for handling device discovery and pairing. This branch contains a service extension developed for a private company.
 
 ### Quickstart
 1. From the app main screen, tap on the button at the bottom right corner to start Bluetooth device discovery. If the Bluetooth is not enabled, the app will turn it on for you.

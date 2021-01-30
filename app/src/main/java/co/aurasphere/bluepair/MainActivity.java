@@ -27,8 +27,8 @@ import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.design.widget.FloatingActionButton;
@@ -41,16 +41,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
-
 import co.aurasphere.bluepair.bluetooth.BluetoothController;
+import co.aurasphere.bluepair.service.BluePairService;
 import co.aurasphere.bluepair.view.DeviceRecyclerViewAdapter;
 import co.aurasphere.bluepair.view.ListInteractionListener;
 import co.aurasphere.bluepair.view.RecyclerViewProgressEmptySupport;
@@ -89,8 +84,6 @@ public class MainActivity extends AppCompatActivity implements ListInteractionLi
 
     private RecyclerViewProgressEmptySupport recyclerView;
 
-    private LinearLayout adContainer;
-
     /**
      * {@inheritDoc}
      */
@@ -107,10 +100,6 @@ public class MainActivity extends AppCompatActivity implements ListInteractionLi
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // Ads.
-        MobileAds.initialize(this);
-        this.adContainer = (LinearLayout) findViewById(R.id.ad_container);
-        reloadAd();
 
         // Sets up the RecyclerView.
         this.recyclerViewAdapter = new DeviceRecyclerViewAdapter(this);
@@ -130,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements ListInteractionLi
 
         // [#11] Ensures that the Bluetooth is available on this device before proceeding.
         boolean hasBluetooth = getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH);
-        if (!hasBluetooth) {
+        if(!hasBluetooth) {
             AlertDialog dialog = new AlertDialog.Builder(MainActivity.this).create();
             dialog.setTitle(getString(R.string.bluetooth_not_available_title));
             dialog.setMessage(getString(R.string.bluetooth_not_available_message));
@@ -196,6 +185,14 @@ public class MainActivity extends AppCompatActivity implements ListInteractionLi
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_about) {
             showAbout();
+            return true;
+        }
+
+        // Starts the bluetooth scan as a service
+        if (id == R.id.action_service_start) {
+            Intent serviceIntent = new Intent(this, BluePairService.class);
+            serviceIntent.setAction(BluePairService.ACTION_START_SERVICE);
+            startService(serviceIntent);
             return true;
         }
 
@@ -330,24 +327,4 @@ public class MainActivity extends AppCompatActivity implements ListInteractionLi
             this.bluetooth.cancelDiscovery();
         }
     }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE || newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            reloadAd();
-        }
-    }
-
-    private void reloadAd() {
-        adContainer.removeAllViews();
-        AdView adView = new AdView(this);
-        adContainer.addView(adView);
-        adView.setAdSize(AdSize.SMART_BANNER);
-        adView.setAdUnitId(BuildConfig.AD_UNIT_ID);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        adView.loadAd(adRequest);
-    }
-
 }
