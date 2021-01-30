@@ -24,10 +24,11 @@
 package co.aurasphere.bluepair.view;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ProgressBar;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Custom RecyclerView with support for showing another view when there's no data and another
